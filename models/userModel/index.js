@@ -11,6 +11,14 @@ const getUserById = id => {
     .where({ id })
     .first();
 };
+// Returns a user by the given ID
+const getUserName = name => {
+  return db("users")
+    .where({ username: name })
+    .first();
+};
+
+// return d;
 
 // Updates a user's information where the ID matches
 const updateUser = (id, changes) => {
@@ -27,7 +35,7 @@ const deleteUser = id => {
 };
 
 // Inserts a new user into the Database
-const postUser = user => {
+const addUser = user => {
   return db("users").insert(user);
 };
 
@@ -36,5 +44,6 @@ module.exports = {
   getUserById,
   updateUser,
   deleteUser,
-  postUser
+  addUser,
+  getUserName
 };
