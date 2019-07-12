@@ -27,13 +27,13 @@ async function protectedRoute(req, res, next) {
     if (!token) {
       return res
         .status(401)
-        .json({ mesage: "No token provided. Please authenticate" });
+        .json({ message: "No token provided. Please authenticate" });
     } else {
       req.decoded = token.id;
       next();
     }
   } catch (err) {
-    res.status(500).json(err, "Internal Server Error");
+    res.status(500).json({ err, message: "Internal Server Error!" });
   }
 }
 
