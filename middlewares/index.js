@@ -39,11 +39,15 @@ async function auth(req, res, next) {
       res.status(404).json({ message: "Enter a valid username and password!" });
     }
     if (user && bcrypt.compareSync(body.password, user.password)) {
-      const token = await generateToken(user.id);
-      const decodedToken = await authenticate(token);
-      req.token = token;
-      req.decoded = decodedToken.id;
-      next();
+      try {
+        const token = await generateToken(user.id);
+        const decodedToken = await authenticate(token);
+        req.token = token;
+        req.decoded = decodedToken.id;
+        next();
+      } catch (err) {
+        res.status(500).json("Internal Server Error");
+      }
     } else {
       res.status(404).json({ message: "Invalid username or password!" });
     }
