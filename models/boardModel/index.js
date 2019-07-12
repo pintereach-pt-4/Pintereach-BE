@@ -28,7 +28,9 @@ const deleteBoard = id => {
 
 // Inserts a new Board into the Database
 const addBoard = board => {
-  return db("boards").insert(board);
+  return db("boards")
+    .insert(board)
+    .returning("*");
 };
 
 module.exports = {

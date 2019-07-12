@@ -23,7 +23,7 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    const board = await db.addBoard(req.body);
+    const board = await db.addBoard({ created_by: req.decoded, ...req.body });
     res.status(201).json(board);
   } catch (err) {
     res.status(500).json(err, "We have an error");

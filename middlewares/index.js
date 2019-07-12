@@ -22,6 +22,7 @@ async function protectedRoute(req, res, next) {
   if (!token) {
     return res.status(401).json("No token provided. Please authenticate");
   } else {
+    req.decoded = token.id;
     next();
   }
 }
