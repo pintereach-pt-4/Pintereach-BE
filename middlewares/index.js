@@ -41,9 +41,9 @@ async function auth(req, res, next) {
     if (user && bcrypt.compareSync(body.password, user.password)) {
       try {
         const token = await generateToken(user.id);
-        const decodedToken = await authenticate(token);
+        // const decodedToken = await authenticate(token);
         req.token = token;
-        req.decoded = decodedToken.id;
+        // req.decoded = decodedToken.id;
         next();
       } catch (err) {
         res.status(500).json("Internal Server Error");
