@@ -3,10 +3,14 @@ const router = express.Router();
 const db = require("../../models/userModel");
 const mw = require("../../middlewares");
 
-router.post("/login", mw.auth, (req, res) => {
-  res
-    .status(200)
-    .json({ message: "logged in", token: req.token, id: req.decoded });
+router.post("/login", mw.auth, async (req, res) => {
+  try {
+    res
+      .status(200)
+      .json({ message: "logged in", token: req.token, id: req.decoded });
+  } catch (err) {
+    res.status(500).json(err, "Internal Server Error!");
+  }
 });
 
 router.post("/register", mw.hashPass, async (req, res) => {
