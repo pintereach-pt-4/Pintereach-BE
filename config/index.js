@@ -4,19 +4,17 @@ const secret = process.env.SECRET || "bacon";
 
 function generateToken(user) {
   const payload = {
-    userID: user.id,
-    username: user.username
+    id: user
   };
   const options = {
     expiresIn: "12h"
   };
 
-  return jwt.sign({ userID: user.id }, secret, payload);
+  return jwt.sign(payload, secret, options);
 }
 
 function authenticate(token) {
   return jwt.verify(token, secret, (err, decoded) => {
-    console.log(decoded);
     return decoded;
   });
 }

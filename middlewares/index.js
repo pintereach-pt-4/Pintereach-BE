@@ -17,8 +17,8 @@ const hashPass = (req, res, next) => {
   }
 };
 
-function protectedRoute(req, res, next) {
-  const token = authenticate(req.headers.token);
+async function protectedRoute(req, res, next) {
+  const token = await authenticate(req.headers.token);
   if (!token) {
     return res.status(401).json("No token provided. Please authenticate");
   } else {
@@ -34,8 +34,10 @@ async function auth(req, res, next) {
       res.status(404).json({ message: "Enter a valid username and password!" });
     }
     if (user && bcrypt.compareSync(body.password, user.password)) {
-      const token = generateToken(user.id);
+      const token = await generateToken(user.id);
+      const decodedToken = await authenticate(token);
       req.token = token;
+      req.decoded = decodedToken.id;
       next();
     } else {
       res.status(404).json({ message: "Invalid username or password!" });

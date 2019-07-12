@@ -4,7 +4,9 @@ const db = require("../../models/userModel");
 const mw = require("../../middlewares");
 
 router.post("/login", mw.auth, (req, res) => {
-  res.status(200).json({ message: "logged in", token: req.token });
+  res
+    .status(200)
+    .json({ message: "logged in", token: req.token, id: req.decoded });
 });
 
 router.post("/register", mw.hashPass, async (req, res) => {
