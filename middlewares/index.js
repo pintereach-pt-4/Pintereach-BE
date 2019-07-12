@@ -3,17 +3,21 @@ const bcrypt = require("bcryptjs");
 const { generateToken, authenticate } = require("../config");
 const db = require("../models/userModel");
 
-const hashPass = (req, res, next) => {
-  let user = req.body;
-  if (!user.password) {
-    res.status(400).json("Password Required");
-  }
-  if (user.password.length < 8) {
-    res.status(400).json("Password must be at least 8 characters long");
-  } else {
-    const hash = bcrypt.hashSync(user.password, 14);
-    user.password = hash;
-    next();
+const hashPass = async (req, res, next) => {
+  try {
+    let user = req.body;
+    if (!user.password) {
+      res.status(400).json("Password Required");
+    }
+    if (user.password.length < 8) {
+      res.status(400).json("Password must be at least 8 characters long");
+    } else {
+      const hash = bcrypt.hashSync(user.password, 14);
+      user.password = hash;
+      next();
+    }
+  } catch (err) {
+    res.status(500).json(err, "Internal Server Error!");
   }
 };
 
@@ -39,15 +43,11 @@ async function auth(req, res, next) {
       res.status(404).json({ message: "Enter a valid username and password!" });
     }
     if (user && bcrypt.compareSync(body.password, user.password)) {
-      try {
-        const token = await generateToken(user.id);
-        // const decodedToken = await authenticate(token);
-        req.token = token;
-        // req.decoded = decodedToken.id;
-        next();
-      } catch (err) {
-        res.status(500).json("Internal Server Error");
-      }
+      const token = await generateToken(user.id);
+      const decodedToken = await authenticate(token);
+      req.token = token;
+      req.decoded = decodedToken.id;
+      next();
     } else {
       res.status(404).json({ message: "Invalid username or password!" });
     }
