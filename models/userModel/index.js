@@ -36,7 +36,9 @@ const deleteUser = id => {
 
 // Inserts a new user into the Database
 const addUser = user => {
-  return db("users").insert(user);
+  return db("users")
+    .insert(user)
+    .returning(["id", "username"]);
 };
 
 module.exports = {

@@ -1,10 +1,10 @@
 // Update with your config settings.
 
 module.exports = {
-  development: {
+  test: {
     client: "sqlite3",
     connection: {
-      filename: "./db/dev.sqlite3"
+      filename: "./db/test.sqlite3"
     },
     useNullAsDefault: true,
     migrations: {
@@ -14,12 +14,21 @@ module.exports = {
       directory: "./db/seeds"
     }
   },
-  test: {
-    client: "sqlite3",
+
+  development: {
+    client: "postgresql",
     connection: {
-      filename: "./db/test.sqlite3"
+      database: process.env.DB,
+      user: process.env.USER,
+      password: process.env.PW,
+      host: process.env.HOST,
+      port: process.env.PORT,
+      uri: process.env.URI
     },
-    useNullAsDefault: true,
+    pool: {
+      min: 2,
+      max: 10
+    },
     migrations: {
       directory: "./db/migrations"
     },
