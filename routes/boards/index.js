@@ -26,7 +26,7 @@ router.post("/", async (req, res) => {
     const board = await db.addBoard({ created_by: req.decoded, ...req.body });
     res.status(201).json(board);
   } catch (err) {
-    res.status(500).json(err, "We have an error");
+    res.status(500).json({ err, message: "Internal Server Error!" });
   }
 });
 
@@ -35,7 +35,7 @@ router.put("/:id", async (req, res) => {
     const changedBoard = await db.updateBoard(req.params.id, req.body);
     res.status(201).json(changedBoard);
   } catch (err) {
-    res.status(500).json(err, "Houston we have a problem");
+    res.status(500).json({ err, message: "Internal Server Error!" });
   }
 });
 
@@ -44,7 +44,7 @@ router.delete("/:id", async (req, res) => {
     const board = await db.deleteBoard(req.params.id);
     res.status(204).json(board);
   } catch (err) {
-    res.status(500).json(err, "Internal Server Error!");
+    res.status(500).json({ err, message: "Internal Server Error!" });
   }
 });
 

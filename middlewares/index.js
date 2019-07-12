@@ -17,7 +17,7 @@ const hashPass = async (req, res, next) => {
       next();
     }
   } catch (err) {
-    res.status(500).json(err, "Internal Server Error!");
+    res.status(500).json({ err, message: "Internal Server Error!" });
   }
 };
 
@@ -25,7 +25,9 @@ async function protectedRoute(req, res, next) {
   try {
     const token = await authenticate(req.headers.token);
     if (!token) {
-      return res.status(401).json("No token provided. Please authenticate");
+      return res
+        .status(401)
+        .json({ mesage: "No token provided. Please authenticate" });
     } else {
       req.decoded = token.id;
       next();
