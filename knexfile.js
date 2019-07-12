@@ -17,14 +17,15 @@ module.exports = {
 
   development: {
     client: "postgresql",
-    connection: {
-      database: process.env.DB,
-      user: process.env.USER,
-      password: process.env.PW,
-      host: process.env.HOST,
-      port: process.env.PORT,
-      uri: process.env.URI
-    },
+    connection: process.env.URI,
+    // {
+    //   database: process.env.DB,
+    //   user: process.env.USER,
+    //   password: process.env.PW,
+    //   host: process.env.HOST,
+    //   port: process.env.PORT,
+    //   uri: process.env.URI
+    // },
     pool: {
       min: 2,
       max: 10
