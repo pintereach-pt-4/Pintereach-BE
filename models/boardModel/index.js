@@ -27,7 +27,7 @@ const deleteBoard = id => {
 };
 
 // Inserts a new Board into the Database
-const postBoard = board => {
+const addBoard = board => {
   return db("boards").insert(board);
 };
 
@@ -36,5 +36,5 @@ module.exports = {
   getBoardById,
   updateBoard,
   deleteBoard,
-  postBoard
+  addBoard
 };

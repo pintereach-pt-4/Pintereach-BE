@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const mw = require("../../middlewares");
 const db = require("../../models/userModel");
 
 // get users from db
@@ -16,15 +17,6 @@ router.get("/:id", async (req, res) => {
   try {
     const user = await db.getUserById(req.params.id);
     res.status(200).json(user);
-  } catch (err) {
-    res.status(500).json(err, "Internal Server Error!");
-  }
-});
-
-router.post("/", async (req, res) => {
-  try {
-    const user = await db.postUser(req.body);
-    res.status(201).json(user);
   } catch (err) {
     res.status(500).json(err, "Internal Server Error!");
   }

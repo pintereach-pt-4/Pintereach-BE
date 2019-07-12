@@ -1,7 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
-const { userRoutes, boardRoutes } = require("../routes");
+const { userRoutes, boardRoutes, authRoutes } = require("../routes");
+const mw = require("../middlewares");
 
 const server = express();
 
@@ -15,7 +16,8 @@ server.get("/", (req, res) => {
 });
 
 // Route configuration
-server.use("/api/users", userRoutes);
-server.use("/api/boards", boardRoutes);
+server.use("/api/users", mw.protectedRoute, userRoutes);
+server.use("/api/boards", mw.protectedRoute, boardRoutes);
+server.use("/api/", authRoutes);
 
 module.exports = server;
