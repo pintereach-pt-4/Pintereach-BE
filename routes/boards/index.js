@@ -23,7 +23,11 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    const board = await db.addBoard({ created_by: req.decoded, ...req.body });
+    const board = await db.addBoard({
+      created_by_id: req.decoded.id,
+      created_by: req.decoded.username,
+      ...req.body
+    });
     res.status(201).json(board);
   } catch (err) {
     res.status(500).json({ err, message: "Internal Server Error!" });

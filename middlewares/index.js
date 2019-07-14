@@ -29,7 +29,7 @@ async function protectedRoute(req, res, next) {
         .status(401)
         .json({ message: "No token provided. Please authenticate" });
     } else {
-      req.decoded = token.id;
+      req.decoded = token;
       next();
     }
   } catch (err) {
@@ -45,10 +45,10 @@ async function auth(req, res, next) {
       res.status(404).json({ message: "Enter a valid username and password!" });
     }
     if (user && bcrypt.compareSync(body.password, user.password)) {
-      const token = await generateToken(user.id);
+      const token = await generateToken(user);
       const decodedToken = await authenticate(token);
       req.token = token;
-      req.decoded = decodedToken.id;
+      req.decoded = decodedToken;
       next();
     } else {
       res.status(404).json({ message: "Invalid username or password!" });
