@@ -12,6 +12,7 @@ exports.up = async function(knex) {
       .notNullable()
       .unique();
     tbl.string("password").notNullable();
+    tbl.timestamp("created_at").defaultTo(knex.fn.now());
   });
 
   await knex.schema.createTable("boards", tbl => {
@@ -21,15 +22,20 @@ exports.up = async function(knex) {
     tbl.string("description").notNullable();
     tbl.string("category").notNullable();
     tbl
-      .integer("created_by")
+      .integer("created_by_id")
       .references("id")
       .inTable("users");
+    tbl
+      .string("created_by")
+      .references("username")
+      .inTable("users");
+    tbl.timestamp("created_at").defaultTo(knex.fn.now());
   });
 
   await knex.schema.createTable("users_boards", tbl => {
     tbl.increments("id");
     tbl
-      .integer("created_by")
+      .integer("created_by_id")
       .references("id")
       .inTable("users");
     tbl

@@ -4,7 +4,10 @@ const secret = process.env.SECRET || "bacon";
 
 function generateToken(user) {
   const payload = {
-    id: user
+    id: user.id,
+    username: user.username,
+    firstName: user.first_name,
+    lastName: user.last_name
   };
   const options = {
     expiresIn: "12h"
