@@ -16,7 +16,8 @@ const getBoardById = id => {
 const updateBoard = (id, changes) => {
   return db("boards")
     .where({ id })
-    .update(changes);
+    .update(changes)
+    .returning("*");
 };
 
 // Deletes a Board from the Database

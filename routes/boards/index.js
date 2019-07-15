@@ -37,7 +37,7 @@ router.post("/", async (req, res) => {
 router.put("/:id", async (req, res) => {
   try {
     const changedBoard = await db.updateBoard(req.params.id, req.body);
-    res.status(201).json(changedBoard);
+    res.status(202).json(changedBoard);
   } catch (err) {
     res.status(500).json({ err, message: "Internal Server Error!" });
   }

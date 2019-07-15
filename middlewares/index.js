@@ -3,23 +3,36 @@ const bcrypt = require("bcryptjs");
 const { generateToken, authenticate } = require("../config");
 const db = require("../models/userModel");
 
-const hashPass = async (req, res, next) => {
-  try {
-    let user = req.body;
-    if (!user.password) {
-      res.status(400).json("Password Required");
-    }
-    if (user.password.length < 8) {
-      res.status(400).json("Password must be at least 8 characters long");
-    } else {
-      const hash = bcrypt.hashSync(user.password, 14);
-      user.password = hash;
-      next();
-    }
-  } catch (err) {
-    res.status(500).json({ err, message: "Internal Server Error!" });
+const hashPass = (req, res, next) => {
+  let user = req.body;
+  if (!user.password) {
+    res.status(400).json("Password Required");
+  }
+  if (user.password.length < 8) {
+    res.status(400).json("Password must be at least 8 characters long");
+  } else {
+    const hash = bcrypt.hashSync(user.password, 14);
+    user.password = hash;
+    next();
   }
 };
+// const hashPass = async (req, res, next) => {
+//   try {
+//     let user = req.body;
+//     if (!user.password) {
+//       res.status(400).json("Password Required");
+//     }
+//     if (user.password.length < 8) {
+//       res.status(400).json("Password must be at least 8 characters long");
+//     } else {
+//       const hash = bcrypt.hashSync(user.password, 14);
+//       user.password = hash;
+//       next();
+//     }
+//   } catch (err) {
+//     res.status(500).json({ err, message: "Internal Server Error!" });
+//   }
+// };
 
 async function protectedRoute(req, res, next) {
   try {
