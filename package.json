@@ -4,7 +4,7 @@
   "description": "Pintereach Back-End",
   "main": "index.js",
   "scripts": {
-    "test": "cross-env DB_ENV=test jest --watch --verbose",
+    "test": "cross-env DB_ENV=test jest --watch --verbose --runInBand",
     "start": "node index.js",
     "server": "nodemon index.js"
   },
