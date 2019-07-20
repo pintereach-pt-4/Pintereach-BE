@@ -18,7 +18,6 @@ const getUserName = name => {
     .first();
 };
 
-// return d;
 
 // Updates a user's information where the ID matches
 const updateUser = (id, changes) => {
