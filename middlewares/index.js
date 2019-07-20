@@ -11,7 +11,7 @@ const hashPass = (req, res, next) => {
   if (user.password.length < 8) {
     res.status(400).json("Password must be at least 8 characters long");
   } else {
-    const hash = bcrypt.hashSync(user.password, 14);
+    const hash = bcrypt.hashSync(user.password, 12);
     user.password = hash;
     next();
   }

@@ -2,7 +2,7 @@ const db = require("../../db");
 
 // List all the boards in the Database
 const getBoards = () => {
-  return db("boards");
+  return db("boards").orderBy("created_at",'desc');
 };
 
 // Returns a board by the given ID
