@@ -21,6 +21,7 @@ exports.up = async function(knex) {
     tbl.string("url").notNullable();
     tbl.string("description").notNullable();
     tbl.string("category").notNullable();
+    tbl.text("notes")
     tbl
       .integer("created_by_id")
       .references("id")
@@ -30,18 +31,6 @@ exports.up = async function(knex) {
       .references("username")
       .inTable("users");
     tbl.timestamp("created_at").defaultTo(knex.fn.now());
-  });
-
-  await knex.schema.createTable("users_boards", tbl => {
-    tbl.increments("id");
-    tbl
-      .integer("created_by_id")
-      .references("id")
-      .inTable("users");
-    tbl
-      .integer("board_id")
-      .references("id")
-      .inTable("boards");
   });
 };
 
