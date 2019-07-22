@@ -39,7 +39,7 @@ async function protectedRoute(req, res, next) {
     res.status(500).json({ err, message: "Internal Server Error!" });
   }
 }
-
+// comments
 async function auth(req, res, next) {
   try {
     const body = req.body;
